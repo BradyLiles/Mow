@@ -1,0 +1,8 @@
+{
+  "name": "mow",
+  "app_id": "ec04ea1b",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
