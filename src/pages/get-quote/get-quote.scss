@@ -1,0 +1,25 @@
+page-get-quote {
+
+  img.logo{
+    margin-bottom: 3em;
+  }
+
+  ion-list {
+    margin-top: 12vh;
+    max-width: 475px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  ion-item.item {
+    background-color: transparent;
+  }
+
+  ion-content {
+    background-color: #fff !important;
+  }
+
+  ion-list.search-results {
+    margin: 0;
+  }
+}

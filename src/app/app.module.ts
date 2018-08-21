@@ -9,11 +9,16 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Pro } from '@ionic/pro';
-
-
+import { AngularFireModule } from 'angularfire2';
+import { GooglePlus } from '@ionic-native/google-plus';
 import { Items } from '../mocks/providers/items';
 import { Settings, User, Api } from '../providers';
 import { MyApp } from './app.component';
+import {AngularFireAuth} from "angularfire2/auth";
+import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+import {Geolocation} from "@ionic-native/geolocation";
+import {Network} from "@ionic-native/network";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -39,7 +44,7 @@ export function provideSettings(storage: Storage) {
 
 Pro.init('ec04ea1b', {
   appVersion: '0.0.1'
-})
+});
 
 @Injectable()
 export class MyErrorHandler implements ErrorHandler {
@@ -62,9 +67,18 @@ export class MyErrorHandler implements ErrorHandler {
   }
 }
 
+const firebaseConfig = {
+    apiKey: 'AIzaSyCriHQl34-yxkRCfaqvrWw927J8ZfAXm_8',
+    authDomain: 'mowapp-81689.firebaseapp.com',
+    // databaseURL: '<your-database-URL>',
+    projectId: 'mowapp-81689',
+    // storageBucket: '<your-storage-bucket>',
+    // messagingSenderId: '<your-messaging-sender-id>'
+};
+
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +91,8 @@ export class MyErrorHandler implements ErrorHandler {
       }
     }),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    AngularFireModule.initializeApp(firebaseConfig),
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -88,12 +103,22 @@ export class MyErrorHandler implements ErrorHandler {
     Items,
     User,
     Camera,
+    GooglePlus,
     SplashScreen,
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
+    AngularFireAuth,
+
     // Keep this to enable Ionic's runtime error handling during development
     IonicErrorHandler,
-    [{ provide: ErrorHandler, useClass: MyErrorHandler }]
+    [{ provide: ErrorHandler, useClass: MyErrorHandler }],
+
+    Network,
+    Geolocation,
+    ConnectivityServiceProvider,
+    GoogleMapsProvider
+  ],
+  exports: [
   ]
 })
 export class AppModule { }

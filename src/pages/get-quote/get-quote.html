@@ -1,0 +1,60 @@
+<ion-content>
+
+  <ion-list inset padding-horizontal>
+
+    <div text-center margin-vertical>
+      <img src="assets/img/mowitalls_clearbg_shadow.png" class="logo" style="max-width: 75%;">
+    </div>
+
+    <ion-card>
+      <ion-card-content>
+
+
+
+        <ion-label stacked>What's your address?</ion-label>
+        <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" [name]="fields.CustomerFullAddress"></ion-searchbar>
+        <ion-list class="search-results">
+          <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
+        </ion-list>
+
+
+
+        <div #pleaseConnect id="please-connect">
+          <p>Please connect to the Internet...</p>
+        </div>
+
+        <div #map id="map">
+          <ion-spinner></ion-spinner>
+        </div>
+
+        <button ion-button clear icon-start>
+          <ion-icon name="ios-paper-plane"></ion-icon>
+          Use current location
+        </button>
+        <button margin-top ion-button full>How Much?</button>
+
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-card>
+    <ion-card-content no-padding>
+      <ion-grid>
+        <ion-row no-padding align-items-center>
+          <ion-col align-self-center>
+            <div float-left>
+              Already have an account?
+            </div>
+          </ion-col>
+          <ion-col align-self-end>
+            <div float-right>
+              <button pull-right ion-button clear>SIGN IN</button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-footer>
