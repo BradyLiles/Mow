@@ -1,6 +1,6 @@
 <ion-content>
 
-  <ion-list inset padding-horizontal>
+  <ion-list inset>
 
     <div text-center margin-vertical>
       <img src="assets/img/mowitalls_clearbg_shadow.png" class="logo" style="max-width: 75%;">
@@ -9,23 +9,11 @@
     <ion-card>
       <ion-card-content>
 
-
-
         <ion-label stacked>What's your address?</ion-label>
-        <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" [name]="fields.CustomerFullAddress"></ion-searchbar>
+        <ion-searchbar (click)="presentSearchAddressModal()" [(ngModel)]="customerFullAddress.description" ></ion-searchbar>
         <ion-list class="search-results">
           <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
         </ion-list>
-
-
-
-        <div #pleaseConnect id="please-connect">
-          <p>Please connect to the Internet...</p>
-        </div>
-
-        <div #map id="map">
-          <ion-spinner></ion-spinner>
-        </div>
 
         <button ion-button clear icon-start>
           <ion-icon name="ios-paper-plane"></ion-icon>
@@ -50,7 +38,7 @@
           </ion-col>
           <ion-col align-self-end>
             <div float-right>
-              <button pull-right ion-button clear>SIGN IN</button>
+              <button (click)="navigateToSignIn()" pull-right ion-button clear>SIGN IN</button>
             </div>
           </ion-col>
         </ion-row>

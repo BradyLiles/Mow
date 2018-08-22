@@ -17,23 +17,31 @@ export class GoogleMapsProvider {
 
   constructor(public connectivityServiceProvider: ConnectivityServiceProvider, public geolocation: Geolocation) {
 
+    console.info('Google Maps Provider Initiated!');
+    if (typeof google == "undefined" || typeof google.maps == "undefined") {
+      if (this.connectivityServiceProvider.isOnline()) {
+        let script = document.createElement("script");
+        script.id = "googleMaps";
+
+        if (this.apiKey) {
+          script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit&libraries=places';
+        } else {
+          script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';
+        }
+        document.body.appendChild(script);
+      }
+    }
   }
 
-  init(mapElement: any, pleaseConnect: any): Promise<any> {
-
+  init(mapElement: any = null, pleaseConnect: any = null): Promise<any> {
     this.mapElement = mapElement;
     this.pleaseConnect = pleaseConnect;
-
     return this.loadGoogleMaps();
-
   }
 
   loadGoogleMaps(): Promise<any> {
-
     return new Promise((resolve) => {
-
       if (typeof google == "undefined" || typeof google.maps == "undefined") {
-
         console.log("Google maps JavaScript needs to be loaded.");
         this.disableMap();
 
@@ -44,24 +52,10 @@ export class GoogleMapsProvider {
             this.initMap().then(() => {
               resolve(true);
             });
-
             this.enableMap();
           };
-
-          let script = document.createElement("script");
-          script.id = "googleMaps";
-
-          if (this.apiKey) {
-            script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit&libraries=places';
-          } else {
-            script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';
-          }
-
-          document.body.appendChild(script);
-
         }
       } else {
-
         if (this.connectivityServiceProvider.isOnline()) {
           this.initMap();
           this.enableMap();
@@ -81,6 +75,10 @@ export class GoogleMapsProvider {
   }
 
   initMap(): Promise<any> {
+
+    if( !this.mapElement ) {
+      return new Promise( resolve => { resolve(true); } );
+    }
 
     this.mapInitialised = true;
 
@@ -106,11 +104,9 @@ export class GoogleMapsProvider {
   }
 
   disableMap(): void {
-
     if (this.pleaseConnect) {
       this.pleaseConnect.style.display = "block";
     }
-
   }
 
   enableMap(): void {
@@ -118,7 +114,6 @@ export class GoogleMapsProvider {
     if (this.pleaseConnect) {
       this.pleaseConnect.style.display = "none";
     }
-
   }
 
   addConnectivityListeners(): void {

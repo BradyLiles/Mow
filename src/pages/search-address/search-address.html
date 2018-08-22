@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar [hideBackButton]="false">
+
+    <div class="address-search">
+      <button class="close-modal" ion-button icon-only clear (click)="dismissModal()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+      <ion-searchbar #addressSearchBar [(ngModel)]="query" (ionInput)="searchPlace()" ></ion-searchbar>
+    </div>
+
+
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list class="search-results">
+    <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
+  </ion-list>
+</ion-content>

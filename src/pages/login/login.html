@@ -8,8 +8,57 @@
 
 
 <ion-content>
+
+  <ion-list inset>
+
+    <div text-center margin-vertical>
+      <img src="assets/img/mowitalls_clearbg_shadow.png" class="logo" style="max-width: 75%;">
+    </div>
+    <hr>
+
+    <google-login></google-login>
+
+  </ion-list>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-card>
+    <ion-card-content no-padding>
+      <ion-grid>
+        <ion-row no-padding align-items-center>
+          <ion-col align-self-center>
+            <div float-left>
+              Don't have an account?
+            </div>
+          </ion-col>
+          <ion-col align-self-end>
+            <div float-right>
+              <button pull-right ion-button clear>GET STARTED</button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-footer>
+
+<!--
+
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'LOGIN_TITLE' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
   <google-login></google-login>
-  <!--<form (submit)="doLogin()">
+  &lt;!&ndash;<form (submit)="doLogin()">
     <ion-list>
 
       <ion-item>
@@ -36,5 +85,6 @@
       </div>
 
     </ion-list>
-  </form>-->
+  </form>&ndash;&gt;
 </ion-content>
+-->

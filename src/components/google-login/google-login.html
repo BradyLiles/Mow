@@ -1,32 +1,57 @@
 <!-- Generated template for the GoogleLoginComponent component -->
-<div *ngIf="(user | async) || {} as user">
-  <button ion-button
-          *ngIf="!user.uid"
-          (tap)="googleLogin()">
-    Login with Google
-  </button>
-  <button ion-button
-          *ngIf="!user.uid"
-          (tap)="facebookLogin()">
-    Login with Facebook
-  </button>
-  <button ion-button
-          *ngIf="!user.uid"
-          (tap)="userCredentialLogin()">
-    Login with Credentials
-  </button>
-  <button ion-button
-          *ngIf="!user.uid"
-          (tap)="registerUser()">
-    Register user
-  </button>
+<ion-grid>
+  <ion-row justify-content-center>
+    <ion-col>
+      <div text-center>
+        <h1 style="margin-bottom: 0; margin-top: 0;">LOGIN</h1>
+        <p style="margin-top: 0;">Login to your account</p>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
 
-  <div *ngIf="user.uid">
-    You're already logged in with UID: {{user.uid}}
+      <ion-item>
+        <ion-label> <ion-icon name="person"></ion-icon> Username</ion-label>
+        <ion-input clearInput type="text"></ion-input>
+      </ion-item>
 
-    <button ion-button (tap)="signOut()">
-      Signout
-    </button>
-  </div>
+      <ion-item>
+        <ion-label> <ion-icon name="lock"></ion-icon> Password</ion-label>
+        <ion-input clearInput type="text"></ion-input>
+      </ion-item>
+      <div padding text-center>
+        <button ion-button color="primary" block>Login</button>
+        <button ion-button clear>Forgot Password?</button>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <hr>
+    </ion-col>
+    <ion-col col-auto>
+      OR CONNECT WITH
+    </ion-col>
+    <ion-col>
+      <hr>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <button ion-button outline block icon-start (tap)="googleLogin()">
+        <ion-icon name="logo-google"></ion-icon>
+        Google
+      </button>
 
-</div>
+    </ion-col>
+    <ion-col>
+      <button ion-button outline block icon-start (tap)="facebookLogin()">
+        <ion-icon name="logo-facebook"></ion-icon>
+        Facebook
+      </button>
+
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
