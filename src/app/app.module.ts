@@ -19,6 +19,7 @@ import { ConnectivityServiceProvider } from '../providers/connectivity-service/c
 import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import {Geolocation} from "@ionic-native/geolocation";
 import {Network} from "@ionic-native/network";
+import {Facebook} from "@ionic-native/facebook";
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -104,6 +105,7 @@ const firebaseConfig = {
     User,
     Camera,
     GooglePlus,
+    Facebook,
     SplashScreen,
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },

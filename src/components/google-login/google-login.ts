@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import {GooglePlus} from '@ionic-native/google-plus';
 import {Platform} from 'ionic-angular';
 import {UserInfo} from 'firebase';
+import {Facebook, FacebookLoginResponse} from "@ionic-native/facebook";
 
 /**
  * Generated class for the GoogleLoginComponent component.
@@ -24,6 +25,7 @@ export class GoogleLoginComponent {
 
   constructor(private afAuth: AngularFireAuth,
               private gplus: GooglePlus,
+              private facebook: Facebook,
               private platform: Platform) {
 
     this.user = this.afAuth.authState;
@@ -38,6 +40,17 @@ export class GoogleLoginComponent {
         'scopes': 'profile email'
       });
       return await this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)).then(() => null);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async nativeFacebookLogin(): Promise<void> {
+    try {
+
+      const fbUser = await this.facebook.login(['public_profile', 'email']);
+
+      return await this.afAuth.auth.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(fbUser.authResponse.accessToken)).then(() => null);
     } catch (err) {
       console.log(err)
     }
@@ -67,15 +80,19 @@ export class GoogleLoginComponent {
     if (this.platform.is('cordova')) {
       this.nativeGoogleLogin();
     } else {
-      this.loginWithProvider( new firebase.auth.GoogleAuthProvider() );
+      this.webLogin( new firebase.auth.GoogleAuthProvider() );
     }
   }
 
   facebookLogin() {
-    this.loginWithProvider( new firebase.auth.FacebookAuthProvider() );
+    if (this.platform.is('cordova')) {
+      this.nativeFacebookLogin()
+    } else {
+      this.webLogin( new firebase.auth.FacebookAuthProvider() );
+    }
   }
 
-  async loginWithProvider( provider: firebase.auth.AuthProvider, credentialToLink: any = null ): Promise<void> {
+  async webLogin(provider: firebase.auth.AuthProvider, credentialToLink: any = null ): Promise<void> {
     try {
       const credential = await this.afAuth.auth.signInWithPopup(provider)
         .then((authUserResponse: firebase.auth.UserCredential) => {
@@ -101,7 +118,7 @@ export class GoogleLoginComponent {
                 }
 
                 if(providerToLink != null) {
-                  return this.loginWithProvider( providerToLink, signInError.credential );
+                  return this.webLogin( providerToLink, signInError.credential );
                 }
               })
           }
